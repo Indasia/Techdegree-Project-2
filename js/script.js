@@ -2,26 +2,22 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 // global variables that store DOM elements
-const studentList = document.querySelectorAll(".student-list");
 const students = document.querySelectorAll(".student-item");
-const studentDetails = document.querySelectorAll('.student-details');
 const page = document.querySelector(".page");
-const pageHeader = document.querySelector('.page-header');
 let studentsPerPage = 10;
 const numOfPages = Math.ceil(students.length/studentsPerPage);
 
 
-// a function with a parameter of page and students
+// a function with a parameter of students and page
 const showPage = (students, page) => {
-   // define range for the first and last indexes
+   // define the range for the first and last indexes
    let firstIndex = (studentsPerPage * page) - studentsPerPage;
    let lastIndex = (studentsPerPage - 1) + firstIndex;
    // loop through the list of students
    for (let i = 0; i < students.length; i += 1) {
-      //if else statement to show or hide students if index is within page number intervals
+      // if else statement to show or hide students if index is within page number intervals
       if (i >= ((page * 10) - 10) && i < (page * 10)){
       students[i].style.display ="block";
       } else {
@@ -29,47 +25,43 @@ const showPage = (students, page) => {
       }
    }
 }
-   
-// calling function of students qnd the first page
+
+
+// initial call to show page function to show students and first page
 showPage (students, 1);
 
 
 const appendPages = (list) => {
-   const pages = students.length/studentsPerPage
-   const pagination = document.createElement("div");
-   page.appendChild(pagination);
-// add "pagination" class
-   pagination.className = "pagination";
-// add unordered list to store button links
-   const unorderedList = document.createElement("ul");
-   pagination.appendChild(unorderedList);
-// for every page, add li and a tags with the page number text
-   for(let i = 0; i <= numOfPages; i += 1){
-// add li tags
-      const listItem = document.createElement("li");
-      unorderedList.appendChild(listItem);
-// create link tags
+   // create div element on page and set class
+   const div = document.createElement("div");
+   page.appendChild(div);
+   div.className = "pagination";
+   // add unordered list to div
+   const ul = document.createElement("ul");
+   div.appendChild(ul);
+   // for every page, add li and a tags with the page number
+   for(let i = 1; i <= numOfPages; i += 1){
+      // add li tags to the div
+      const li = document.createElement("li");
+      ul.appendChild(li);
+      // add a tags to the li
       const a = document.createElement("a");
-      listItem.appendChild(a);
+      li.appendChild(a);
       a.setAttribute("href", "#");
-      a.textContent = i + 1;
+      a.textContent = i;
       if (a.textContent === "1")
       // highlight first button
       a.style.backgroundColor = "highlight";
-      // add an event listener that displays appropiate page when clicked
+      // add an event listener that displays correct page when clicked
       a.addEventListener('click', (e) => {
         const aLinks = document.querySelectorAll("a");
         let page = e.target;
         page.className = "active";
         // loops through all a tags and highlights current page
-        for (let i = 0; i < aLinks.length; i += 1)
-        {
-          if (aLinks[i] === page)
-          {
+        for (let i = 0; i < aLinks.length; i += 1) {
+          if (aLinks[i] === page) {
           page.style.backgroundColor = "highlight";
-          }
-          else
-          {
+          } else {
             aLinks[i].style.backgroundColor = '';
             aLinks[i].className = '';
           }
